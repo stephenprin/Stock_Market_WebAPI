@@ -5,6 +5,41 @@
     "version": "1.0"
   },
   "paths": {
+    "/api/comment": {
+      "get": {
+        "tags": [
+          "Comment"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/comment/{id}": {
+      "get": {
+        "tags": [
+          "Comment"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/stock": {
       "get": {
         "tags": [
@@ -22,6 +57,11 @@
         ],
         "requestBody": {
           "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateStockRequestDto"
+              }
+            },
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/CreateStockRequestDto"
@@ -85,6 +125,11 @@
         ],
         "requestBody": {
           "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateStockRequestDto"
+              }
+            },
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/UpdateStockRequestDto"
@@ -102,6 +147,27 @@
             }
           }
         },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Stock"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"

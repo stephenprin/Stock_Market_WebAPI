@@ -1,4 +1,5 @@
-﻿using Stock_Market_WebAPI.Models;
+﻿using Stock_Market_WebAPI.Dtos.Comment;
+using Stock_Market_WebAPI.Models;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Stock_Market_WebAPI.Dtos.Stock
@@ -14,6 +15,8 @@ namespace Stock_Market_WebAPI.Dtos.Stock
         public decimal Dividend { get; set; }
         public string Industry { get; set; } = string.Empty;
         public long MarketCap { get; set; }
-     
+
+        public List<CommentDto> Comments { get; set; } = new List<CommentDto>();
+
     }
 }

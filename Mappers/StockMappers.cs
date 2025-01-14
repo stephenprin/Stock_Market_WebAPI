@@ -15,7 +15,8 @@ namespace Stock_Market_WebAPI.Mappers
                 Purchase = stockModel.Purchase,
                 Dividend = stockModel.Dividend,
                 Industry = stockModel.Industry,
-                MarketCap = stockModel.MarketCap
+                MarketCap = stockModel.MarketCap,
+                Comments= stockModel.Comments.Select(x => x.toCommentDto()).ToList()
             };
         }
         public static Stock toStockModel(this CreateStockRequestDto createStockRequestDto)
