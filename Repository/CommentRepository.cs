@@ -14,9 +14,12 @@ namespace Stock_Market_WebAPI.Repository
             _context = context;
         }
 
-        public Task<Comment> CreatePost(Comment comment)
+        public async Task<Comment> CreatePost(Comment comment)
         {
-            throw new NotImplementedException();
+                 await _context.Comments.AddAsync(comment);
+            await _context.SaveChangesAsync();
+            return comment;
+
         }
 
         public Task<Comment> DeletePost(int id)

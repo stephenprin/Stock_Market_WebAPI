@@ -47,6 +47,12 @@ namespace Stock_Market_WebAPI.Repository
             return await _context.Stocks.Include(c=> c.Comments).ToListAsync();
         }
 
+        public Task<bool> StockExist(int id)
+        {
+            return _context.Stocks.AnyAsync(x => x.Id == id);
+
+        }
+
         public async Task<Stock?> UpdateStock(int id, UpdateStockRequestDto updateModel)
         {
             var stock = await _context.Stocks.FirstOrDefaultAsync(x => x.Id == id);

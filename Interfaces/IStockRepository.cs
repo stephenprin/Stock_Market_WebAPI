@@ -10,5 +10,6 @@ namespace Stock_Market_WebAPI.Interfaces
         Task<Stock> AddStock(Stock stockModel);
         Task<Stock?> UpdateStock(int id, UpdateStockRequestDto updateModel);
         Task<Stock?> DeleteStock(int id);
+        Task<bool> StockExist(int id);
     }
 }

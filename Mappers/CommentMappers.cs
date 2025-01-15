@@ -21,14 +21,14 @@ namespace Stock_Market_WebAPI.Mappers
 
         }
 
-        //public static Comment toCommentModel(this CreateCommentRequestDto createCommentRequestDto)
-        //{
-        //    return new Comment
-        //    {
-        //        Title = createCommentRequestDto.Title,
-        //        Content = createCommentRequestDto.Content,
-        //        StockId = createCommentRequestDto.StockId
-        //    };
-        //}
+        public static Comment toCommentModel(this CreateCommentDto createCommentDto, int stockId)
+        {
+            return new Comment
+            {
+                Title = createCommentDto.Title,
+                Content = createCommentDto.Content,
+                StockId = stockId
+            };
+        }
     }
 }
