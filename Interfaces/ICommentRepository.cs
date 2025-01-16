@@ -6,9 +6,9 @@ namespace Stock_Market_WebAPI.Interfaces
     {
         Task<List<Comment>> GetAllCommennt();
 
-         Task<Comment?> GetCommenntById(int id);
+         Task<Comment?> GetCommenntById(Guid id);
         Task<Comment> CreatePost(Comment comment);
-        Task<Comment> UpdatePost(int id, Comment comment);
-        Task<Comment> DeletePost(int id);
+        Task<Comment?> UpdatePost(Guid id, Comment comment);
+        Task<Comment?> DeletePost(Guid id);
     }
 }

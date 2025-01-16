@@ -4,7 +4,7 @@ namespace Stock_Market_WebAPI.Models
 {
     public class Stock
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Symbol { get; set; }= string.Empty;
         public string CompanyName { get; set; } = string.Empty;
         [Column(TypeName = "decimal(18, 2)")]

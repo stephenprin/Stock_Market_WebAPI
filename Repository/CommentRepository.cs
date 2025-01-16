@@ -22,9 +22,17 @@ namespace Stock_Market_WebAPI.Repository
 
         }
 
-        public Task<Comment> DeletePost(int id)
+        public async Task<Comment?> DeletePost(Guid id)
         {
-            throw new NotImplementedException();
+            var existingComment= await _context.Comments.FindAsync(id);
+            if (existingComment == null)
+            {
+                return null;
+            }
+            _context.Comments.Remove(existingComment);
+            await _context.SaveChangesAsync();
+            return existingComment;
+
         }
 
         public async Task<List<Comment>> GetAllCommennt()
@@ -32,7 +40,7 @@ namespace Stock_Market_WebAPI.Repository
             return await _context.Comments.ToListAsync();
         }
 
-        public async Task<Comment?> GetCommenntById(int id)
+        public async Task<Comment?> GetCommenntById(Guid id)
         {
             var comment = await _context.Comments.FirstOrDefaultAsync(x => x.Id == id);
             if (comment == null)
@@ -43,9 +51,23 @@ namespace Stock_Market_WebAPI.Repository
 
         }
 
-        public Task<Comment> UpdatePost(int id, Comment comment)
+        public async Task<Comment?> UpdatePost(Guid id, Comment comment)
         {
-            throw new NotImplementedException();
+            var existingComment = await _context.Comments.FindAsync(id);
+            if (existingComment == null)
+            {
+                return null;
+            }
+            existingComment.Title = comment.Title;
+            existingComment.Content = comment.Content;
+
+
+            await _context.SaveChangesAsync();
+            return existingComment;
+
         }
+
+
+
     }
 }

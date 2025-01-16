@@ -28,8 +28,8 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -51,8 +51,8 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -80,6 +80,76 @@
             }
           }
         },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/comment/{id}/update": {
+      "put": {
+        "tags": [
+          "Comment"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCommentDto"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCommentDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCommentDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCommentDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/comment/{id}/delete": {
+      "delete": {
+        "tags": [
+          "Comment"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -144,8 +214,8 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -165,8 +235,8 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -210,8 +280,8 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -226,73 +296,133 @@
   "components": {
     "schemas": {
       "CreateCommentDto": {
+        "required": [
+          "content",
+          "title"
+        ],
         "type": "object",
         "properties": {
           "title": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 100,
+            "minLength": 5,
+            "type": "string"
           },
           "content": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 500,
+            "minLength": 5,
+            "type": "string"
           }
         },
         "additionalProperties": false
       },
       "CreateStockRequestDto": {
+        "required": [
+          "companyName",
+          "dividend",
+          "industry",
+          "marketCap",
+          "purchase",
+          "symbol"
+        ],
         "type": "object",
         "properties": {
           "symbol": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 10,
+            "minLength": 1,
+            "type": "string"
           },
           "companyName": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string"
           },
           "purchase": {
+            "maximum": 1000000000000,
+            "minimum": 1,
             "type": "number",
             "format": "double"
           },
           "dividend": {
+            "maximum": 100,
+            "minimum": 0.001,
             "type": "number",
             "format": "double"
           },
           "industry": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 50,
+            "minLength": 1,
+            "type": "string"
           },
           "marketCap": {
+            "maximum": 10000000000000,
+            "minimum": 1,
             "type": "integer",
             "format": "int64"
           }
         },
         "additionalProperties": false
       },
+      "UpdateCommentDto": {
+        "required": [
+          "content",
+          "title"
+        ],
+        "type": "object",
+        "properties": {
+          "title": {
+            "maxLength": 100,
+            "minLength": 5,
+            "type": "string"
+          },
+          "content": {
+            "maxLength": 500,
+            "minLength": 5,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
       "UpdateStockRequestDto": {
+        "required": [
+          "companyName",
+          "dividend",
+          "industry",
+          "marketCap",
+          "purchase",
+          "symbol"
+        ],
         "type": "object",
         "properties": {
           "symbol": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 10,
+            "minLength": 1,
+            "type": "string"
           },
           "companyName": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string"
           },
           "purchase": {
+            "maximum": 1000000000000,
+            "minimum": 1,
             "type": "number",
             "format": "double"
           },
           "dividend": {
+            "maximum": 100,
+            "minimum": 0.001,
             "type": "number",
             "format": "double"
           },
           "industry": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 50,
+            "minLength": 1,
+            "type": "string"
           },
           "marketCap": {
+            "maximum": 10000000000000,
+            "minimum": 1,
             "type": "integer",
             "format": "int64"
           }
