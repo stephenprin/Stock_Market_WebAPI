@@ -22,6 +22,9 @@ namespace Stock_Market_WebAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetComments()
         {
+            if (!ModelState.IsValid) { 
+                return BadRequest(ModelState);
+            }
             var comments = await commentRepository.GetAllCommennt();
             var commentsDto = comments.Select(x => x.toCommentDto());
             return Ok(commentsDto);
@@ -30,6 +33,10 @@ namespace Stock_Market_WebAPI.Controllers
         [HttpGet("{id:Guid}")]
         public async Task<IActionResult> GetComment([FromRoute] Guid id)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             var comment = await commentRepository.GetCommenntById(id);
             if (comment == null)
             {
@@ -41,7 +48,12 @@ namespace Stock_Market_WebAPI.Controllers
         [HttpPost("{stockId:Guid}/create")]
         public async Task<IActionResult> AddComment([FromRoute] Guid stockId ,[FromBody] CreateCommentDto commentDto)
         {
-            if( !await stockRepository.StockExist(stockId))
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if ( !await stockRepository.StockExist(stockId))
             {
                 return BadRequest("Stock does not exist");
             }
@@ -54,6 +66,11 @@ namespace Stock_Market_WebAPI.Controllers
         [HttpPut("{id:Guid}/update")]
         public async Task<IActionResult> UpdateComment([FromRoute] Guid id, [FromBody] UpdateCommentDto commentDto)
         {
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             var updatedComment = await commentRepository.UpdatePost(id, commentDto.toCommenUpdatetModel());
             if (updatedComment == null)
             {
@@ -66,6 +83,11 @@ namespace Stock_Market_WebAPI.Controllers
         [HttpDelete("{id:Guid}/delete")]
         public async Task<IActionResult> DeleteComment([FromRoute] Guid id)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var comment = await commentRepository.DeletePost(id);
             if (comment == null)
             {

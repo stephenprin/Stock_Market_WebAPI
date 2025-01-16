@@ -23,12 +23,21 @@ namespace Stock_Market_WebAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetStocks()
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             var stocks = await _stockRepository.GetStocks();
             var stocksDto=  stocks.Select(x=>x.toStockDto());
             return Ok(stocksDto);
         }
         [HttpGet("{id:Guid}")]
-        public async Task<IActionResult> GetStock([FromRoute] Guid id) { 
+        public async Task<IActionResult> GetStock([FromRoute] Guid id) {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var stock= await _stockRepository.GetStock(id);
             if (stock == null)
             {
@@ -40,6 +49,10 @@ namespace Stock_Market_WebAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> AddStock([FromBody] CreateStockRequestDto stockDto)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             var stockModel = stockDto.toStockModel();
              await _stockRepository.AddStock(stockModel);
             return CreatedAtAction(nameof(GetStock), new { id = stockModel.Id }, stockModel.toStockDto());
@@ -49,6 +62,10 @@ namespace Stock_Market_WebAPI.Controllers
         [Route("{id:Guid}")]
         public async Task<IActionResult> UpdateStock([FromRoute] Guid id,[FromBody] UpdateStockRequestDto updateDto)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             var stock =await _stockRepository.UpdateStock(id, updateDto);
 
 
@@ -64,6 +81,10 @@ namespace Stock_Market_WebAPI.Controllers
         [Route("{id:Guid}")]
         public async Task<IActionResult> DeleteStock([FromRoute] Guid id)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             var stock = await _stockRepository.DeleteStock(id);
             if (stock == null)
             {
