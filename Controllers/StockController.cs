@@ -27,8 +27,8 @@ namespace Stock_Market_WebAPI.Controllers
             var stocksDto=  stocks.Select(x=>x.toStockDto());
             return Ok(stocksDto);
         }
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetStock([FromRoute]int id) { 
+        [HttpGet("{id:Guid}")]
+        public async Task<IActionResult> GetStock([FromRoute] Guid id) { 
             var stock= await _stockRepository.GetStock(id);
             if (stock == null)
             {
@@ -46,8 +46,8 @@ namespace Stock_Market_WebAPI.Controllers
         }
 
         [HttpPut]
-        [Route("{id}")]
-        public async Task<IActionResult> UpdateStock([FromRoute] int id,[FromBody] UpdateStockRequestDto updateDto)
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> UpdateStock([FromRoute] Guid id,[FromBody] UpdateStockRequestDto updateDto)
         {
             var stock =await _stockRepository.UpdateStock(id, updateDto);
 
@@ -61,13 +61,13 @@ namespace Stock_Market_WebAPI.Controllers
         }
 
         [HttpDelete]
-        [Route("{id}")]
-        public async Task<IActionResult> DeleteStock([FromRoute] int id)
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> DeleteStock([FromRoute] Guid id)
         {
             var stock = await _stockRepository.DeleteStock(id);
             if (stock == null)
             {
-                return NotFound();
+                return NotFound("Stock not found");
             }
 
 
