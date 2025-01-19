@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Stock_Market_WebAPI.Dtos.User;
+using Stock_Market_WebAPI.Interfaces;
 using Stock_Market_WebAPI.Models;
 
 namespace Stock_Market_WebAPI.Controllers
@@ -11,10 +12,12 @@ namespace Stock_Market_WebAPI.Controllers
     public class UserController:ControllerBase
     {
         private readonly UserManager<AddUser> _userManager;
+        private readonly ITokenService _tokenService;
 
-        public UserController(UserManager<AddUser> userManager)
+        public UserController(UserManager<AddUser> userManager, ITokenService tokenService)
         {
             _userManager = userManager;
+            _tokenService = tokenService;
         }
 
         [HttpPost("register")]
@@ -38,7 +41,13 @@ namespace Stock_Market_WebAPI.Controllers
                    var roleResult = await _userManager.AddToRoleAsync(user, "User");
                     if (roleResult.Succeeded)
                     {
-                        return Ok("User created successfully");
+                        return Ok(
+                            new NewUserDto
+                            {
+                                UserName = user.UserName,
+                                Email = user.Email,
+                                Token = _tokenService.CreateToken(user)
+                            });
                     }
                     else
                     {

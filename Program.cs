@@ -8,6 +8,7 @@ using Stock_Market_WebAPI.Data;
 using Stock_Market_WebAPI.Interfaces;
 using Stock_Market_WebAPI.Models;
 using Stock_Market_WebAPI.Repository;
+using Stock_Market_WebAPI.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IStockRepository, StockRepository>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
