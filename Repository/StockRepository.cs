@@ -22,21 +22,21 @@ namespace Stock_Market_WebAPI.Repository
             return stockModel;
         }
 
-        public async Task<Stock?> DeleteStock(int id)
+        public async Task<Stock?> DeleteStock(Guid id)
         {
-          var stockModel = _context.Stocks.FirstOrDefaultAsync(x => x.Id == id);
+          var stockModel = await _context.Stocks.FirstOrDefaultAsync(x=>x.Id==id);
             if (stockModel == null)
             {
                 return null;
             }
-            _context.Stocks.RemoveRange();
+            _context.Stocks.Remove(stockModel);
             await _context.SaveChangesAsync();
-            return await stockModel;
+            return  stockModel;
         }
 
 
         
-        public async Task<Stock?> GetStock(int id)
+        public async Task<Stock?> GetStock(Guid id)
         {
             return await _context.Stocks.Include(c=>c.Comments).FirstOrDefaultAsync(x => x.Id == id);
 
@@ -47,13 +47,13 @@ namespace Stock_Market_WebAPI.Repository
             return await _context.Stocks.Include(c=> c.Comments).ToListAsync();
         }
 
-        public Task<bool> StockExist(int id)
+        public Task<bool> StockExist(Guid id)
         {
             return _context.Stocks.AnyAsync(x => x.Id == id);
 
         }
 
-        public async Task<Stock?> UpdateStock(int id, UpdateStockRequestDto updateModel)
+        public async Task<Stock?> UpdateStock(Guid id, UpdateStockRequestDto updateModel)
         {
             var stock = await _context.Stocks.FirstOrDefaultAsync(x => x.Id == id);
 

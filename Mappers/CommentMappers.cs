@@ -21,7 +21,7 @@ namespace Stock_Market_WebAPI.Mappers
 
         }
 
-        public static Comment toCommentModel(this CreateCommentDto createCommentDto, int stockId)
+        public static Comment toCommentModel(this CreateCommentDto createCommentDto, Guid stockId)
         {
             return new Comment
             {
@@ -30,5 +30,15 @@ namespace Stock_Market_WebAPI.Mappers
                 StockId = stockId
             };
         }
+        public static Comment toCommenUpdatetModel(this UpdateCommentDto updateCommentDto)
+        {
+            return new Comment
+            {
+                Title = updateCommentDto.Title,
+                Content = updateCommentDto.Content,
+               
+            };
+        }
+
     }
 }
