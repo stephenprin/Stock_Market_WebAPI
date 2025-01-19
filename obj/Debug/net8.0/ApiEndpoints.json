@@ -161,5 +161,21 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Stock_Market_WebAPI.Controllers.UserController",
+    "Method": "Register",
+    "RelativePath": "api/user/register",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userDto",
+        "Type": "Stock_Market_WebAPI.Dtos.User.CreateUserDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   }
 ]

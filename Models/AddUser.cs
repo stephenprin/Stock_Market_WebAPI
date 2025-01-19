@@ -1,6 +1,9 @@
-﻿namespace Stock_Market_WebAPI.Models
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace Stock_Market_WebAPI.Models
 {
-    public class AddUser
+    public class AddUser: IdentityUser
     {
+       
     }
 }
