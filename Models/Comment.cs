@@ -1,5 +1,8 @@
-﻿namespace Stock_Market_WebAPI.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Stock_Market_WebAPI.Models
 {
+    [Table("Comment")]
     public class Comment
     {
         public Guid Id { get; set; }

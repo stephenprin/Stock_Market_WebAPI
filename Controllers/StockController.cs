@@ -1,6 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Stock_Market_WebAPI.Data;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Stock_Market_WebAPI.Dtos.Stock;
 using Stock_Market_WebAPI.Interfaces;
 using Stock_Market_WebAPI.Mappers;
@@ -11,16 +10,16 @@ namespace Stock_Market_WebAPI.Controllers
     [ApiController]
     public class StockController: ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        
         private readonly IStockRepository _stockRepository;
 
-        public StockController(ApplicationDbContext context, IStockRepository stockRepository)
+        public StockController(IStockRepository stockRepository)
         {
-            _context = context;
             _stockRepository = stockRepository;
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetStocks()
         {
             if (!ModelState.IsValid)
@@ -32,6 +31,7 @@ namespace Stock_Market_WebAPI.Controllers
             return Ok(stocksDto);
         }
         [HttpGet("{id:Guid}")]
+        [Authorize]
         public async Task<IActionResult> GetStock([FromRoute] Guid id) {
             if (!ModelState.IsValid)
             {

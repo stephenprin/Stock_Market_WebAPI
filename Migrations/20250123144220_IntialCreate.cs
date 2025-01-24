@@ -53,7 +53,7 @@ namespace Stock_Market_WebAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Stocks",
+                name: "Stock",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -66,7 +66,7 @@ namespace Stock_Market_WebAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Stocks", x => x.Id);
+                    table.PrimaryKey("PK_Stock", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -176,7 +176,7 @@ namespace Stock_Market_WebAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Comments",
+                name: "Comment",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -187,12 +187,36 @@ namespace Stock_Market_WebAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Comments", x => x.Id);
+                    table.PrimaryKey("PK_Comment", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Comments_Stocks_StockId",
+                        name: "FK_Comment_Stock_StockId",
                         column: x => x.StockId,
-                        principalTable: "Stocks",
+                        principalTable: "Stock",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Portfolio",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    StockId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Portfolio", x => new { x.UserId, x.StockId });
+                    table.ForeignKey(
+                        name: "FK_Portfolio_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Portfolio_Stock_StockId",
+                        column: x => x.StockId,
+                        principalTable: "Stock",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -200,8 +224,8 @@ namespace Stock_Market_WebAPI.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "8b399489-8431-4d03-8571-4a2c59a96422", null, "User", "USER" },
-                    { "d932f111-3fa2-494e-bc4e-9af5110f0d72", null, "Admin", "ADMIN" }
+                    { "aa97e18c-1bb4-4aa3-8bae-0c533c134189", null, "Admin", "ADMIN" },
+                    { "ba52829c-4b01-4169-a082-d5ccca7dbca3", null, "User", "USER" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -244,8 +268,13 @@ namespace Stock_Market_WebAPI.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comments_StockId",
-                table: "Comments",
+                name: "IX_Comment_StockId",
+                table: "Comment",
+                column: "StockId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Portfolio_StockId",
+                table: "Portfolio",
                 column: "StockId");
         }
 
@@ -268,7 +297,10 @@ namespace Stock_Market_WebAPI.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Comments");
+                name: "Comment");
+
+            migrationBuilder.DropTable(
+                name: "Portfolio");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -277,7 +309,7 @@ namespace Stock_Market_WebAPI.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Stocks");
+                name: "Stock");
         }
     }
 }
