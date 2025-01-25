@@ -180,4 +180,3 @@ C:\Users\Prince\Desktop\Stock_Market_WebAPI\Stock_Market_WebAPI\obj\Debug\net8.0
 C:\Users\Prince\Desktop\Stock_Market_WebAPI\Stock_Market_WebAPI\obj\Debug\net8.0\Stock_Market_WebAPI.pdb
 C:\Users\Prince\Desktop\Stock_Market_WebAPI\Stock_Market_WebAPI\obj\Debug\net8.0\Stock_Market_WebAPI.genruntimeconfig.cache
 C:\Users\Prince\Desktop\Stock_Market_WebAPI\Stock_Market_WebAPI\obj\Debug\net8.0\ref\Stock_Market_WebAPI.dll
-C:\Users\Prince\Desktop\Stock_Market_WebAPI\Stock_Market_WebAPI\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
